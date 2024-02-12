@@ -50,7 +50,11 @@ public static class Hid
     /// <remarks>Available since hidapi 0.10.0</remarks>
     public static string VersionString()
     {
+#if NETSTANDARD2_0
+        return Marshal.PtrToStringAnsi(NativeMethods.VersionString()) ?? string.Empty;
+#else
         return Marshal.PtrToStringUTF8(NativeMethods.VersionString()) ?? string.Empty;
+#endif
     }
 
     /// <summary>

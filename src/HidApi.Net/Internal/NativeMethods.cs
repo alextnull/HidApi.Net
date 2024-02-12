@@ -5,6 +5,7 @@ namespace HidApi;
 
 internal static partial class NativeMethods
 {
+#if NET6_0_OR_GREATER
     private const string Library = "HidApi";
     private static IntPtr libraryHandle = IntPtr.Zero;
 
@@ -27,6 +28,7 @@ internal static partial class NativeMethods
 
         throw new DllNotFoundException($"Could not find hidapi library tried: {string.Join(", ", NativeHidApiLibrary.GetNames())}");
     }
+#endif
 
     public static unsafe DeviceSafeHandle Open(ushort vendorId, ushort productId, NullTerminatedString serialNumber)
     {

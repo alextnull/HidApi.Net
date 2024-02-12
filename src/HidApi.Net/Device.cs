@@ -77,7 +77,7 @@ public sealed class Device : IDisposable
         if (result == -1)
             HidException.Throw(handle);
 
-        return data[..result];
+        return SliceElementsFromStart(data, result);
     }
 
     /// <summary>
@@ -97,7 +97,7 @@ public sealed class Device : IDisposable
         if (result == -1)
             HidException.Throw(handle);
 
-        return data[..result];
+        return SliceElementsFromStart(data, result);
     }
 
     /// <summary>
@@ -145,7 +145,7 @@ public sealed class Device : IDisposable
         if (result == -1)
             HidException.Throw(handle);
 
-        return spanData[..result];
+        return SliceElementsFromStart(spanData, result);
     }
 
     /// <summary>
@@ -169,7 +169,7 @@ public sealed class Device : IDisposable
         if (result == -1)
             HidException.Throw(handle);
 
-        return spanData[..result];
+        return SliceElementsFromStart(spanData, result);
     }
 
     /// <summary>
@@ -290,7 +290,7 @@ public sealed class Device : IDisposable
         if (result == -1)
             HidException.Throw(handle);
 
-        return spanData[..result];
+        return SliceElementsFromStart(spanData, result);
     }
 
     /// <summary>
@@ -299,5 +299,14 @@ public sealed class Device : IDisposable
     public void Dispose()
     {
         handle.Dispose();
+    }
+
+    private static ReadOnlySpan<byte> SliceElementsFromStart(ReadOnlySpan<byte> span, int elementsCount)
+    {
+#if NET6_0_OR_GREATER
+        return span[..elementsCount];
+#else
+        return span.Slice(0, elementsCount);
+#endif
     }
 }

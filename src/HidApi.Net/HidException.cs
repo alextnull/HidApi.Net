@@ -9,7 +9,9 @@ public class HidException : Exception
 {
     private HidException(string message) : base(message) { }
 
+#if NET6_0_OR_GREATER
     [StackTraceHidden]
+#endif
     internal static void Throw(DeviceSafeHandle handle)
     {
         unsafe

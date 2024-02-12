@@ -98,9 +98,10 @@ public static class Tester
         if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
             return OSPlatform.OSX;
 
+#if !NETSTANDARD2_0
         if (RuntimeInformation.IsOSPlatform(OSPlatform.FreeBSD))
             return OSPlatform.FreeBSD;
-
+#endif
         throw new NotSupportedException("Unknown OsPlatform");
     }
 }
